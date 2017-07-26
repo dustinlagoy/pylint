@@ -596,7 +596,10 @@ class FormatChecker(BaseTokenChecker):
         if (i > 0 and (tokens[i-1][0] == tokenize.NAME and
                        not (keyword.iskeyword(tokens[i-1][1]))
                        or tokens[i-1][1] in _CLOSING_BRACKETS)):
-            self._check_space(tokens, i, (_MUST_NOT, _MUST_NOT))
+            if tokens[i][1] == '(':
+                self._check_space(tokens, i, (_MUST, _MUST_NOT))
+            else:
+                self._check_space(tokens, i, (_MUST_NOT, _MUST_NOT))
         else:
             self._check_space(tokens, i, (_IGNORE, _MUST_NOT))
 
